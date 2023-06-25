@@ -36,11 +36,13 @@ $a=7;
 <?php
 date_default_timezone_set('Asia/Kolkata');
 $today = date("D d M Y");
+$roww = [];
+if(isset($_GET['edit'])) {
 $edit = $_GET['edit'];
 
  $resultt = mysqli_query($con,"SELECT * FROM blog where id=".$edit."");
  $roww = mysqli_fetch_array($resultt);
-
+}
 if(isset($_POST['publise'])){
 	
 $title1 = $_POST['title'];
@@ -67,6 +69,7 @@ $file_extension = strtolower($file_extension);
 if(in_array($file_extension,$valid_ext)){
 // Compress Image
 compressImage($tempname,$folder,60);
+
 }
 if($edit==''){
 $insertdata = mysqli_query($con,"INSERT INTO blog(title,category,descrip,img,url,date,status)VALUES('$title','$category','$descrip','$lis_img','$url','$today','0')");
@@ -125,7 +128,7 @@ function compressImage($source, $destination, $quality) {
 			<div class="card-header">
              <div class="form-group">
                   <label>Enter Title</label>
-                 <input name="title" value="<?php echo $roww["title"]; ?>" type="text" class="form-control" placeholder="Enter ...">
+                 <input name="title" value="<?php echo ($roww) ? $roww["title"] : ''; ?>" type="text" class="form-control" placeholder="Enter ...">
                 </div>
             </div>
             	<div class="card-header">
@@ -149,7 +152,7 @@ function compressImage($source, $destination, $quality) {
 			<label>Enter Description</label>
               <div class="mb-3">
                 <textarea name="descrip" class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo $roww["descrip"]; ?></textarea>
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo ($roww) ? $roww["descrip"] : ''; ?></textarea>
               </div>
             </div>
 			<div class="card-header">
@@ -157,7 +160,7 @@ function compressImage($source, $destination, $quality) {
                     <label for="exampleInputFile">Select Img<span style="color:red;">(only compresed)</span></label>
 					<p style="color:red;">img size 800px x 800px</p>
                         <input name="lis_img" type="file" required>
-                     <?php echo $roww["img"]; ?>
+                     <?php echo ($roww) ? $roww["img"] : ''; ?>
                   </div>
                 
 			</div>

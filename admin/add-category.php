@@ -45,10 +45,7 @@ if(isset($_GET['delete_id']))
 
 $edit = $_GET['edit'];
 
- $resultt = mysqli_query($con,"SELECT * FROM category where id=".$edit."");
- $roww = mysqli_fetch_array($resultt);
-$location = mysqli_query($con,"SELECT * FROM category");
-
+$categoryData = mysqli_query($con,"SELECT * FROM category");
 
 if(isset($_POST['add'])){
 	
@@ -61,7 +58,9 @@ echo "<script>alert('Added Successfully');</script>
 	<script>window.location.href = 'add-category.php'</script>";
 }
 else{
-
+$resultt = mysqli_query($con,"SELECT * FROM category where id=".$edit."");
+$roww = mysqli_fetch_array($resultt);
+$location = mysqli_query($con,"SELECT * FROM category");
 $insertdata = mysqli_query($con,"UPDATE category SET cat_name='$name' where id=".$edit."");
 echo "<script>alert('Updated Successfully');</script>
 	<script>window.location.href = 'add-category.php'</script>";
@@ -122,6 +121,13 @@ echo "<script>alert('Updated Successfully');</script>
                     <th>Name</th>
                     <th></th>
                   </tr>
+                  <?php
+                  foreach ($categoryData as $row) {
+                    echo "<tr>";
+                    echo "<td>" . $row['cat_name'] . "</td>";
+                    echo "</tr>";
+                }
+                  ?>
                 </thead>
                 <tbody>
 		<?php  

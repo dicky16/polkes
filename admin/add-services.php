@@ -37,11 +37,12 @@ $a=3;
 <?php
 date_default_timezone_set('Asia/Kolkata');
 $today = date("D d M Y");
+if(isset($_GET['edit'])) {
 $edit = $_GET['edit'];
 
  $resultt = mysqli_query($con,"SELECT * FROM services where id=".$edit."");
  $roww = mysqli_fetch_array($resultt);
-
+}
 if(isset($_POST['publise'])){
 	
 $title1 = $_POST['title'];
